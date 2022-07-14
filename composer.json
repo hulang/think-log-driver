@@ -1,0 +1,21 @@
+{
+    "name": "hulang/think-log-driver",
+    "description": "The ThinkPHP6 log driver Package",
+    "require": {
+        "php": ">=7.2.0",
+        "topthink/framework": "6.0.*"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "hulang",
+            "email": "hulanfy@163.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "think\\log\\driver\\": "src/"
+        }
+    }
+}
