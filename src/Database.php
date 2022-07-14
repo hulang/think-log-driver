@@ -120,7 +120,7 @@ class Database implements LogHandlerInterface
         $controller     = $this->app->request->controller();
         $action         = $this->app->request->action();
 
-        //忽略操作
+        // 忽略设置操作
         if (in_array($app_name . '/' . $controller . '/' . $action, $this->config['action_filters'])) {
             return '';
         }
@@ -146,6 +146,10 @@ class Database implements LogHandlerInterface
                     $runtime_max < $runtime && $runtime_max = $runtime;
                 }
             }
+        }
+        // 执行为0不写入
+        if ($runtime_max == 0) {
+            return '';
         }
         $time  = time();
         $param = [
