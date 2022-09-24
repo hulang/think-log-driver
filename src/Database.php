@@ -149,7 +149,7 @@ class Database implements LogHandlerInterface
             }
         }
         // 执行为0不写入
-        if ($runtime_max == 0) {
+        if ($runtime_max <= 0) {
             return '';
         }
         $time  = time();
