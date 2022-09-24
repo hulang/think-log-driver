@@ -54,7 +54,7 @@ class Database implements LogHandlerInterface
      * @access public
      * @param array $log 日志信息
      * @param bool $append 是否追加请求信息
-     * @return bool
+     * @return mixed|bool
      */
     public function save(array $log, bool $append = false): bool
     {
@@ -63,6 +63,7 @@ class Database implements LogHandlerInterface
         $destination = $this->getMasterLogFile();
 
         $path = dirname($destination);
+
         !is_dir($path) && mkdir($path, 0755, true);
 
         $info = [];
@@ -103,7 +104,7 @@ class Database implements LogHandlerInterface
      * 写入日志到数据库
      * @access protected
      * @param array $message
-     * @return \Exception|string
+     * @return mixed|\Exception|string
      */
     protected function writeDb(array $message)
     {
@@ -120,7 +121,7 @@ class Database implements LogHandlerInterface
         $controller     = $this->app->request->controller();
         $action         = $this->app->request->action();
 
-        // 忽略设置操作
+        //忽略操作
         if (in_array($app_name . '/' . $controller . '/' . $action, $this->config['action_filters'])) {
             return '';
         }
@@ -128,7 +129,7 @@ class Database implements LogHandlerInterface
         $sql         = [];
         $runtime_max = 0;
         if (isset($message['sql'])) {
-            foreach ($message['sql'] as $k => $v) {
+            foreach ($message['sql'] as $v) {
                 $db_k = 0;
                 if (strstr($v, 'SHOW FULL COLUMNS') || strstr($v, 'CONNECT:')) {
                     continue;
@@ -146,10 +147,6 @@ class Database implements LogHandlerInterface
                     $runtime_max < $runtime && $runtime_max = $runtime;
                 }
             }
-        }
-        // 执行为0不写入
-        if ($runtime_max == 0) {
-            return '';
         }
         $time  = time();
         $param = [
@@ -170,7 +167,7 @@ class Database implements LogHandlerInterface
             'controller'  => $controller,
             'action'      => $action,
             'create_time' => $time,
-            'create_date' => date('Y-m-d H:i:s', $time),
+            'create_date' => date('Y-m-d H:i:s'),
             'runtime'     => $runtime_max,
         ];
         if ($log_db_connect === 'mongodb') {
@@ -208,7 +205,7 @@ class Database implements LogHandlerInterface
      * @param string $destination 日志文件
      * @param bool $apart 是否独立文件写入
      * @param bool $append 是否追加请求信息
-     * @return bool
+     * @return mixed|bool
      */
     protected function write(array $message, string $destination, bool $apart = false, bool $append = false): bool
     {
@@ -230,7 +227,7 @@ class Database implements LogHandlerInterface
     /**
      * 获取主日志文件名
      * @access protected
-     * @return string
+     * @return mixed|string
      */
     protected function getMasterLogFile(): string
     {
@@ -264,7 +261,7 @@ class Database implements LogHandlerInterface
      * @access protected
      * @param string $path 日志目录
      * @param string $type 日志类型
-     * @return string
+     * @return mixed|string
      */
     protected function getApartLevelFile(string $path, string $type): string
     {
@@ -283,6 +280,7 @@ class Database implements LogHandlerInterface
      * 检查日志文件大小并自动生成备份文件
      * @access protected
      * @param string $destination 日志文件
+     * @return mixed
      */
     protected function checkLogSize(string $destination)
     {
@@ -303,6 +301,7 @@ class Database implements LogHandlerInterface
      * @param $info
      * @param bool $append
      * @param bool $apart
+     * @return mixed
      */
     protected function getDebugLog(&$info, bool $append, bool $apart)
     {
