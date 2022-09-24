@@ -121,7 +121,7 @@ class Database implements LogHandlerInterface
         $controller     = $this->app->request->controller();
         $action         = $this->app->request->action();
 
-        //忽略操作
+        // 忽略操作
         if (in_array($app_name . '/' . $controller . '/' . $action, $this->config['action_filters'])) {
             return '';
         }
@@ -148,6 +148,10 @@ class Database implements LogHandlerInterface
                 }
             }
         }
+        // 执行为0不写入
+        if ($runtime_max == 0) {
+            return '';
+        }
         $time  = time();
         $param = [
             'get'   => $this->app->request->get(),
@@ -167,7 +171,7 @@ class Database implements LogHandlerInterface
             'controller'  => $controller,
             'action'      => $action,
             'create_time' => $time,
-            'create_date' => date('Y-m-d H:i:s'),
+            'create_date' => date('Y-m-d H:i:s', $time),
             'runtime'     => $runtime_max,
         ];
         if ($log_db_connect === 'mongodb') {
