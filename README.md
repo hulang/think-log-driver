@@ -1,9 +1,9 @@
-# think-log-driver
-think-log-driver
+## thinkphp6.1+ 日志驱动扩展包
 
-## 依赖
-适用于`thinkphp6.*`
-php: >=7.2
+### 环境
+
+1. php >= 7.2.5
+2. thinkphp >=6.1
 
 ## 安装 
 1. 安装`think-log-driver`
