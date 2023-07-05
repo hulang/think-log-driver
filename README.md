@@ -1,9 +1,9 @@
-## ThinkPHP 6.1+ 日志驱动扩展包
+## ThinkPHP 8.0.0 日志驱动扩展包
 
 ### 环境
 
-- php >= 7.2.5
-- ThinkPHP >=6.1
+- php >=8.0.0
+- ThinkPHP ^8.0
 
 ## 安装 
 1. 安装`think-log-driver`
