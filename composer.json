@@ -1,10 +1,10 @@
 {
     "name": "hulang/think-log-driver",
-    "description": "The ThinkPHP6.1+ log driver Package",
+    "description": "The ThinkPHP 8.0.0 log driver Package",
     "require": {
-        "php": ">=7.2.5",
+        "php": ">=8.0.0",
         "ext-json": "*",
-        "topthink/framework": ">=6.0"
+        "topthink/framework": "^8.0"
     },
     "license": "MIT",
     "authors": [
