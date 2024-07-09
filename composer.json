@@ -1,6 +1,6 @@
 {
     "name": "hulang/think-log-driver",
-    "description": "The ThinkPHP 8.0.0 log driver Package",
+    "description": "The ThinkPHP8.0.0 log driver Package",
     "require": {
         "php": ">=8.0.0",
         "ext-json": "*",
