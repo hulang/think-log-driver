@@ -78,8 +78,7 @@ CREATE TABLE `tp_log_sql`  (
   `runtime` decimal(10, 3) UNSIGNED NULL DEFAULT 0.000 COMMENT '运行时长',
   `sql_list` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT 'SQL语句',
   `param` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '参数',
-  `create_date` datetime NULL DEFAULT NULL COMMENT '添加时间',
-  `create_time` int NULL DEFAULT 0 COMMENT '添加时间戳',
+  `addtime` int NULL DEFAULT 0 COMMENT '添加时间戳',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `runtime`(`runtime` ASC) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '记录日志' ROW_FORMAT = DYNAMIC;
