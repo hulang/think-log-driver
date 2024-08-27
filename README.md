@@ -1,18 +1,18 @@
-## ThinkPHP 8.0.0 日志驱动扩展包
+### ThinkPHP 8.0.0 日志驱动扩展包
 
-### 环境
+#### 环境
 
 - php >=8.0.0
 - ThinkPHP ^8.0
 
-## 安装
+### 安装
 1. 安装`think-log-driver`
 
 ```sh
 composer require hulang/think-log-driver
 ```
 
-## 使用
+### 使用
 1. 更改配置
 在`config/log.php`中的配置修改
 
