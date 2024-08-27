@@ -71,7 +71,7 @@ class Database implements LogHandlerInterface
      * @param bool $append 是否将日志追加到现有文件,默认为false（覆盖现有文件）
      * @return mixed|bool 返回保存操作的结果,通常是true,除非写入操作失败
      */
-    public function save(array $log, bool $append = false): bool
+    public function save($log = [], $append = false): bool
     {
         // 将日志写入数据库
         $this->writeDb($log);
@@ -127,7 +127,7 @@ class Database implements LogHandlerInterface
      * @param array $message 包含日志信息的数组,可能包含SQL和错误信息
      * @return mixed|\Exception|string 返回操作结果,可能是成功提示、异常对象或空字符串
      */
-    protected function writeDb(array $message)
+    protected function writeDb($message = [])
     {
         // 在CLI环境下不执行日志写入
         if (PHP_SAPI == 'cli') {
@@ -237,7 +237,7 @@ class Database implements LogHandlerInterface
      * @param bool $append 是否追加请求信息到日志,默认为false,表示不追加
      * @return mixed|bool 写入日志的成功与否
      */
-    protected function write(array $message, string $destination, bool $apart = false, bool $append = false): bool
+    protected function write($message = [], $destination = '', $apart = false, $append = false)
     {
         // 检查日志文件大小,如果超过预定大小,则备份当前日志文件并创建新的日志文件
         // 检测日志文件大小,超过配置大小则备份日志文件重新生成
@@ -265,7 +265,7 @@ class Database implements LogHandlerInterface
      * @access protected
      * @return mixed|string 主日志文件的完整路径
      */
-    protected function getMasterLogFile(): string
+    protected function getMasterLogFile()
     {
         // 如果配置了最大文件数,则检查并可能删除多余的日志文件
         if ($this->config['max_files']) {
@@ -300,7 +300,7 @@ class Database implements LogHandlerInterface
      * @param string $type 日志的类型,用于区分不同类型的日志,例如错误日志、访问日志等
      * @return mixed|string 返回构建好的日志文件名,格式为‘日期_类型.log’
      */
-    protected function getApartLevelFile(string $path, string $type): string
+    protected function getApartLevelFile($path = '', $type = '')
     {
         // 根据配置判断是否使用单个日志文件还是按日期分割日志文件
         if ($this->config['single']) {
@@ -313,8 +313,9 @@ class Database implements LogHandlerInterface
             // 如果以上配置都未设置,按天分割日志文件
             $name = date('d');
         }
+        $result = $path . DIRECTORY_SEPARATOR . $name . '_' . $type . '.log';
         // 构建并返回日志文件的完整路径和文件名
-        return $path . DIRECTORY_SEPARATOR . $name . '_' . $type . '.log';
+        return $result;
     }
 
     /**
@@ -326,7 +327,7 @@ class Database implements LogHandlerInterface
      * @param string $destination 日志文件的路径
      * @return mixed 无返回值
      */
-    protected function checkLogSize(string $destination)
+    protected function checkLogSize($destination = '')
     {
         // 检查文件是否存在,且文件大小是否超过配置的大小
         if (is_file($destination) && floor($this->config['file_size']) <= filesize($destination)) {
@@ -348,7 +349,7 @@ class Database implements LogHandlerInterface
      * @param bool $apart 是否将调试信息以分开的形式添加,默认为false表示不分开
      * @return mixed 返回调整后的调试信息数组
      */
-    protected function getDebugLog(&$info, bool $append, bool $apart)
+    protected function getDebugLog(&$info, $append, $apart)
     {
         // 检查是否处于调试模式且是否需要追加信息
         if ($this->app->isDebug() && $append) {
